@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📦 博客备份系统 · 归档站</title>
+    <title>📦 博客备份系统</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -65,11 +65,12 @@
             background: transparent;
             border: 1px solid #00ff80;
             color: #00ff80;
-            padding: 5px 15px;
+            padding: 8px 20px;
             border-radius: 4px;
             text-decoration: none;
             font-size: 0.9rem;
             transition: all 0.3s;
+            display: inline-block;
         }
         .download-btn:hover {
             background: #00ff80;
@@ -105,26 +106,50 @@
             <div class="subtitle">自动备份 · 版本管理 · 一键恢复</div>
         </header>
 
-        <div class="backup-info" id="backupInfo">
-            <div class="backup-time">⏱️ 正在加载备份信息...</div>
+        <div class="backup-info">
+            <div class="backup-time">⏱️ 上次备份: 2026-02-25 15:30:22</div>
+            <div style="color: #00ff80; margin-top: 10px;">✅ 备份状态: 正常</div>
         </div>
 
-        <div class="stats-grid" id="statsGrid">
+        <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-number">-</div>
+                <div class="stat-number">3</div>
                 <div class="stat-label">总备份数</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">-</div>
+                <div class="stat-number">4.7</div>
                 <div class="stat-label">总大小 (MB)</div>
             </div>
         </div>
 
         <div class="backup-list">
             <h2 style="margin-bottom: 20px; color: #00ff80;">📋 最近备份</h2>
-            <div id="backupItems">
-                <!-- 备份列表会动态加载到这里 -->
-                <div style="color: #888; text-align: center; padding: 20px;">加载中...</div>
+            
+            <div class="backup-item">
+                <div>
+                    <div class="backup-name">📄 文章备份</div>
+                    <div class="backup-date">2026-02-25 15:30:22</div>
+                </div>
+                <div class="backup-size">1.2 MB</div>
+                <a href="/backups/posts/posts_20260225_143022.tar.gz" class="download-btn" download>下载</a>
+            </div>
+
+            <div class="backup-item">
+                <div>
+                    <div class="backup-name">⚙️ 配置文件</div>
+                    <div class="backup-date">2026-02-25 15:30:22</div>
+                </div>
+                <div class="backup-size">2 KB</div>
+                <a href="/backups/config/config_20260225_143022.yml" class="download-btn" download>下载</a>
+            </div>
+
+            <div class="backup-item">
+                <div>
+                    <div class="backup-name">🖼️ 图片备份</div>
+                    <div class="backup-date">2026-02-25 15:30:22</div>
+                </div>
+                <div class="backup-size">3.5 MB</div>
+                <a href="/backups/images/images_20260225_143022.tar.gz" class="download-btn" download>下载</a>
             </div>
         </div>
 
@@ -145,54 +170,5 @@ cd /e/blog-docs.bbroot.com
             </p>
         </footer>
     </div>
-
-    <script>
-        // 动态加载备份文件列表
-        async function loadBackups() {
-            try {
-                // 这里需要后端 API 或预先生成的文件列表
-                // 目前先用静态示例
-                const backups = [
-                    { name: 'posts_2026-02-25.tar.gz', date: '2026-02-25 15:30', size: '1.2 MB' },
-                    { name: 'posts_2026-02-24.tar.gz', date: '2026-02-24 15:30', size: '1.1 MB' },
-                    { name: 'config_2026-02-25.yml', date: '2026-02-25 15:30', size: '2 KB' },
-                    { name: 'images_2026-02-25.tar.gz', date: '2026-02-25 15:30', size: '3.5 MB' }
-                ];
-
-                const container = document.getElementById('backupItems');
-                container.innerHTML = backups.map(b => `
-                    <div class="backup-item">
-                        <div>
-                            <div class="backup-name">${b.name}</div>
-                            <div class="backup-date">${b.date}</div>
-                        </div>
-                        <div class="backup-size">${b.size}</div>
-                        <a href="/backups/${b.name}" class="download-btn" download>下载</a>
-                    </div>
-                `).join('');
-
-                document.getElementById('backupInfo').innerHTML = `
-                    <div class="backup-time">⏱️ 上次备份: 2026-02-25 15:30:00</div>
-                    <div style="color: #00ff80; margin-top: 10px;">✅ 备份状态: 正常</div>
-                `;
-
-                document.getElementById('statsGrid').innerHTML = `
-                    <div class="stat-card">
-                        <div class="stat-number">${backups.length}</div>
-                        <div class="stat-label">总备份数</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">5.9</div>
-                        <div class="stat-label">总大小 (MB)</div>
-                    </div>
-                `;
-            } catch (error) {
-                console.error('加载备份失败:', error);
-            }
-        }
-
-        // 页面加载时运行
-        loadBackups();
-    </script>
 </body>
 </html>
