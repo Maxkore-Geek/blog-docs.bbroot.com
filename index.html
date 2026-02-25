@@ -3,126 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📦 博客备份 · 归档站</title>
+    <title>📦 博客备份系统 · 归档站</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace;
-            background: #1a1a1a;
+            font-family: 'JetBrains Mono', monospace;
+            background: #0f0f0f;
             color: #e0e0e0;
             line-height: 1.6;
         }
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-        header { text-align: center; margin-bottom: 50px; }
-        h1 { font-size: 3rem; color: #888; margin-bottom: 10px; }
-        .subtitle { color: #666; }
-        .archive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-        .archive-card {
-            background: #2a2a2a;
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        header { margin-bottom: 40px; }
+        h1 { font-size: 3rem; color: #00ff80; }
+        .subtitle { color: #888; margin-bottom: 20px; }
+        .backup-info {
+            background: #1a1a1a;
             border: 1px solid #333;
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 20px;
-            transition: all 0.3s;
+            margin: 20px 0;
         }
-        .archive-card:hover { border-color: #888; }
-        .archive-year { font-size: 2rem; color: #888; margin-bottom: 10px; }
-        .archive-count { color: #666; font-size: 0.9rem; }
-        .post-list { margin-top: 15px; }
-        .post-item {
-            padding: 8px 0;
-            border-bottom: 1px solid #333;
-            display: flex;
-            justify-content: space-between;
-            color: #aaa;
+        .backup-time { color: #00ff80; font-size: 1.2rem; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
-        .post-date { color: #666; font-size: 0.8rem; }
-        .warning {
-            background: #332a1a;
-            border: 1px solid #665533;
+        .stat-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            color: #00ff80;
+            font-weight: bold;
+        }
+        .stat-label { color: #888; margin-top: 10px; }
+        .backup-list {
+            background: #1a1a1a;
+            border: 1px solid #333;
             border-radius: 8px;
             padding: 20px;
             margin: 30px 0;
-            color: #ccaa66;
+        }
+        .backup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #333;
+        }
+        .backup-item:last-child { border-bottom: none; }
+        .backup-name { color: #00ff80; }
+        .backup-date { color: #888; font-size: 0.9rem; }
+        .backup-size { color: #666; font-size: 0.9rem; }
+        .download-btn {
+            background: transparent;
+            border: 1px solid #00ff80;
+            color: #00ff80;
+            padding: 5px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            background: #00ff80;
+            color: #0f0f0f;
+        }
+        .backup-script {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        pre {
+            background: #0f0f0f;
+            padding: 15px;
+            border-radius: 4px;
+            color: #00ff80;
+            overflow-x: auto;
         }
         footer {
             margin-top: 60px;
             text-align: center;
             color: #666;
+            padding: 20px;
             border-top: 1px solid #333;
-            padding-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📦 博客备份 · 归档站</h1>
-            <div class="subtitle">旧文章 · 草稿 · 历史版本</div>
+            <h1>📦 博客备份系统</h1>
+            <div class="subtitle">自动备份 · 版本管理 · 一键恢复</div>
         </header>
 
-        <div class="warning">
-            ⚠️ 本站点为博客备份归档，内容可能非最新、不完整，仅供参考。
+        <div class="backup-info">
+            <div class="backup-time">⏱️ 上次备份: 2026-02-25 15:30:00</div>
+            <div style="color: #00ff80; margin-top: 10px;">✅ 备份状态: 正常</div>
         </div>
 
-        <div class="archive-grid">
-            <div class="archive-card">
-                <div class="archive-year">2026</div>
-                <div class="archive-count">3 篇文章</div>
-                <div class="post-list">
-                    <div class="post-item">
-                        <span>Hexo 博客完全操作手册</span>
-                        <span class="post-date">2026-02-23</span>
-                    </div>
-                    <div class="post-item">
-                        <span>从零开始搭建个人博客</span>
-                        <span class="post-date">2026-02-23</span>
-                    </div>
-                    <div class="post-item">
-                        <span>博客维护说明书</span>
-                        <span class="post-date">2026-02-23</span>
-                    </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">47</div>
+                <div class="stat-label">总文章数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3.2</div>
+                <div class="stat-label">备份大小 (MB)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">版本数量</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">配置备份</div>
+            </div>
+        </div>
+
+        <div class="backup-list">
+            <h2 style="margin-bottom: 20px; color: #00ff80;">📋 最近备份</h2>
+            
+            <div class="backup-item">
+                <div>
+                    <div class="backup-name">posts_2026-02-25.tar.gz</div>
+                    <div class="backup-date">2026-02-25 15:30:00</div>
                 </div>
+                <div class="backup-size">1.2 MB</div>
+                <a href="#" class="download-btn">下载</a>
             </div>
 
-            <div class="archive-card">
-                <div class="archive-year">草稿箱</div>
-                <div class="archive-count">2 篇未完成</div>
-                <div class="post-list">
-                    <div class="post-item">
-                        <span>Docker 入门指南（草稿）</span>
-                        <span class="post-date">进行中</span>
-                    </div>
-                    <div class="post-item">
-                        <span>Git 进阶技巧（草稿）</span>
-                        <span class="post-date">待续</span>
-                    </div>
+            <div class="backup-item">
+                <div>
+                    <div class="backup-name">posts_2026-02-24.tar.gz</div>
+                    <div class="backup-date">2026-02-24 15:30:00</div>
                 </div>
+                <div class="backup-size">1.1 MB</div>
+                <a href="#" class="download-btn">下载</a>
             </div>
 
-            <div class="archive-card">
-                <div class="archive-year">历史版本</div>
-                <div class="archive-count">5 个版本</div>
-                <div class="post-list">
-                    <div class="post-item">
-                        <span>Hexo 手册 v1.0</span>
-                        <span class="post-date">2026-02-20</span>
-                    </div>
-                    <div class="post-item">
-                        <span>Hexo 手册 v2.0</span>
-                        <span class="post-date">2026-02-23</span>
-                    </div>
+            <div class="backup-item">
+                <div>
+                    <div class="backup-name">config_2026-02-25.yml</div>
+                    <div class="backup-date">2026-02-25 15:30:00</div>
                 </div>
+                <div class="backup-size">2 KB</div>
+                <a href="#" class="download-btn">下载</a>
             </div>
+        </div>
+
+        <div class="backup-script">
+            <h2 style="margin-bottom: 20px; color: #00ff80;">🤖 自动备份脚本</h2>
+            <p style="color: #888; margin-bottom: 10px;">在博客服务器上设置定时任务：</p>
+            <pre>
+#!/bin/bash
+# 博客自动备份脚本
+# 每天凌晨 3 点执行
+
+BACKUP_DIR="/e/blog-docs.bbroot.com/backups/posts"
+DATE=$(date +%Y%m%d)
+
+# 备份文章
+tar -czf "$BACKUP_DIR/posts_$DATE.tar.gz" /e/MyBlog/source/_posts/
+
+# 备份配置
+cp /e/MyBlog/_config.yml "/e/blog-docs.bbroot.com/backups/config/config_$DATE.yml"
+
+# 备份数据库
+cp /e/MyBlog/db.json "/e/blog-docs.bbroot.com/backups/db/db_$DATE.json"
+
+# 提交到 Git
+cd /e/blog-docs.bbroot.com
+git add .
+git commit -m "Daily backup $DATE"
+git push
+
+echo "✅ 备份完成 $DATE"</pre>
         </div>
 
         <footer>
-            <p>© 2026 Maxkore · 博客备份归档 · 数据仅供参考</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">
+            <p>© 2026 Maxkore · 博客备份系统 · 每日自动更新</p>
+            <p style="margin-top: 10px;">
                 <a href="https://maxkore.bbroot.com" style="color: #666; text-decoration: none;">← 返回主博客</a>
             </p>
         </footer>
